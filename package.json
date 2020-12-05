@@ -1,0 +1,24 @@
+{
+  "name": "TBMicroService",
+  "version": "1.0.0",
+  "description": "Connect different frame.",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yihaimen/TBMicroService.git"
+  },
+  "keywords": ["MicroService", "ThoughtBytes", "React", "TypeScript", "Webpack"],
+  "author": {
+    "name" : "ThoughtBytes",
+    "email" : "yihaimen@outlook.com",
+    "url" : "https://yihaimen.github.io/"
+  },
+  "contributors": [],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yihaimen/TBMicroService/issues"
+  },
+  "homepage": "https://github.com/yihaimen/TBMicroService#readme"
+}
