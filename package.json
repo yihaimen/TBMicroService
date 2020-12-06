@@ -9,16 +9,25 @@
     "type": "git",
     "url": "git+https://github.com/yihaimen/TBMicroService.git"
   },
-  "keywords": ["MicroService", "ThoughtBytes", "React", "TypeScript", "Webpack"],
+  "keywords": [
+    "MicroService",
+    "ThoughtBytes",
+    "React",
+    "TypeScript",
+    "Webpack"
+  ],
   "author": {
-    "name" : "ThoughtBytes",
-    "email" : "yihaimen@outlook.com",
-    "url" : "https://yihaimen.github.io/"
+    "name": "ThoughtBytes",
+    "email": "yihaimen@outlook.com",
+    "url": "https://yihaimen.github.io/"
   },
   "contributors": [],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/yihaimen/TBMicroService/issues"
   },
-  "homepage": "https://github.com/yihaimen/TBMicroService#readme"
+  "homepage": "https://github.com/yihaimen/TBMicroService#readme",
+  "devDependencies": {
+    "html-webpack-plugin": "^4.5.0"
+  }
 }
