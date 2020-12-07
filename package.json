@@ -28,6 +28,8 @@
   },
   "homepage": "https://github.com/yihaimen/TBMicroService#readme",
   "devDependencies": {
-    "html-webpack-plugin": "^4.5.0"
+    "css-loader": "^5.0.1",
+    "html-webpack-plugin": "^4.5.0",
+    "ts-loader": "^8.0.11"
   }
 }
