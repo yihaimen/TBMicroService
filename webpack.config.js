@@ -12,6 +12,7 @@ module.exports = {
     filename: '[name].bundle.js' // '[name].[contenthash].bundle.js'
     // publicPath // 可配置CDN
   },
+  target: 'web',
   mode: 'development', // development  production
   module: {
     // 转换某些类型的模块的源代码
