@@ -4,8 +4,9 @@
   "description": "Connect different frame.",
   "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --config webpack.config.js"
+    "dev": "webpack serve --open --progress --config webpack.config.js",
+    "build": "webpack --progress --env production --config webpack.config.js",
+    "local": "http-server dist"
   },
   "repository": {
     "type": "git",
@@ -33,8 +34,17 @@
     "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^5.0.1",
     "html-webpack-plugin": "^4.5.0",
+    "http-server": "^0.12.3",
     "ts-loader": "^8.0.11",
+    "typescript": "^4.1.2",
     "webpack": "^5.10.0",
-    "webpack-cli": "^4.2.0"
+    "webpack-bundle-analyzer": "^4.2.0",
+    "webpack-cli": "^4.2.0",
+    "webpack-dev-server": "^3.11.0",
+    "workbox-webpack-plugin": "^6.0.2"
+  },
+  "dependencies": {
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
   }
 }
