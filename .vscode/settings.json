@@ -1,0 +1,12 @@
+{
+  "eslint.options": {
+      "configFile": ".eslintrc.js"
+  },
+  "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true
+  },
+  "files.autoSave": "onFocusChange",
+  "editor.formatOnType": true,
+  "editor.formatOnSave": true,
+  "eslint.alwaysShowStatus": true
+}
