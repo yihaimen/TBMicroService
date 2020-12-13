@@ -37,8 +37,11 @@ module.exports = {
     ],
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx', 'ts', 'tsx'] }],
     'no-console': 0,
+    'no-shadow': 0,
     'no-use-before-define': 0,
     'global-require': 0,
+    '@typescript-eslint/no-explicit-any': ['off'],
+    '@typescript-eslint/no-var-requires': ['off'],
   },
   settings: {
     react: {

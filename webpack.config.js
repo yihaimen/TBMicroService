@@ -1,7 +1,8 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const WorkboxPlugin = require('workbox-webpack-plugin');
-// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
+// const WorkboxPlugin = require('workbox-webpack-plugin');
+// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const webpack = require('webpack'); // 访问内置的插件
 const path = require('path');
 
@@ -9,14 +10,15 @@ module.exports = (env) => ({
   entry: ['@babel/polyfill', './src/index.tsx'],
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: '[name].bundle.js', // '[name].[contenthash].bundle.js'
+    filename: '[name].bundle.js',
+    chunkFilename: '[id].[hash:6].bundle.js',
     publicPath: '/', // 可配置CDN
   },
   target: 'web',
   mode: env.production ? 'production' : 'development',
-  devtool: env.production ? 'source-map' : 'inline-source-map',
+  devtool: env.production ? '(none)' : 'inline-source-map',
   devServer: {
-    contentBase: './dist',
+    contentBase: path.join(__dirname, 'dist'),
     compress: true,
     watchContentBase: true,
     host: 'localhost',
@@ -34,7 +36,7 @@ module.exports = (env) => ({
     },
   },
   optimization: {
-    moduleIds: 'deterministic',
+    moduleIds: env.production ? 'deterministic' : 'named',
     runtimeChunk: 'single',
     usedExports: true,
     splitChunks: {
@@ -55,13 +57,19 @@ module.exports = (env) => ({
           reuseExistingChunk: true,
           name: 'default',
         },
+        styles: {
+          name: 'styles',
+          test: /\.css$/,
+          chunks: 'all',
+          enforce: true,
+        },
       },
     },
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.jsx', '.js', '.json'],
     alias: {
-      '@': path.resolve(__dirname, 'src/'),
+      // '@': path.resolve(__dirname, 'src/'),
     },
   },
   module: {
@@ -69,17 +77,37 @@ module.exports = (env) => ({
     rules: [
       // {test: /\.ts$/, use: ''}
       {
-        test: /\.less$/i,
+        test: /\.((c|le)ss)$/i,
         use: [
-          { loader: 'style-loader' },
+          {
+            loader: ExtractCssChunks.loader,
+            options: {
+              // you can specify a publicPath here
+              // by default it uses publicPath in webpackOptions.output
+              publicPath: '/',
+              hmr: !env.production,
+            },
+          },
           {
             loader: 'css-loader',
             options: {
+              importLoaders: 1,
               modules: true,
             },
           },
-          { loader: 'postcss-loader' },
-          { loader: 'less-loader' },
+          {
+            loader: 'postcss-loader',
+            options: {
+              sourceMap: !env.production,
+            },
+          },
+          { loader: 'resolve-url-loader' },
+          {
+            loader: 'less-loader',
+            options: {
+              sourceMap: !env.production,
+            },
+          },
         ],
       },
       {
@@ -102,12 +130,19 @@ module.exports = (env) => ({
     new CleanWebpackPlugin(),
     new webpack.ProgressPlugin(),
     // new BundleAnalyzerPlugin(),
-    new HtmlWebpackPlugin({ template: './public/index.html', title: 'TBMicroServices' }),
-    new WorkboxPlugin.GenerateSW({
-      // 这些选项帮助快速启用 ServiceWorkers
-      // 不允许遗留任何“旧的” ServiceWorkers
-      clientsClaim: true,
-      skipWaiting: true,
+    new ExtractCssChunks({
+      // Options similar to the same options in webpackOptions.output
+      // all options are optional
+      filename: env.production ? '[name].[hash].css' : '[name].css',
+      chunkFilename: env.production ? '[id].[hash].css' : '[id].css',
+      ignoreOrder: false, // Enable to remove warnings about conflicting order
     }),
+    new HtmlWebpackPlugin({ template: './public/index.html', title: 'TBMicroServices' }),
+    // new WorkboxPlugin.GenerateSW({
+    //   // 这些选项帮助快速启用 ServiceWorkers
+    //   // 不允许遗留任何“旧的” ServiceWorkers
+    //   clientsClaim: true,
+    //   skipWaiting: true,
+    // }),
   ],
 });
