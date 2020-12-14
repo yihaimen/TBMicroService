@@ -21,7 +21,7 @@ module.exports = (env) => ({
     contentBase: path.join(__dirname, 'dist'),
     compress: true,
     watchContentBase: true,
-    host: 'localhost',
+    host: '0.0.0.0',
     port: 8081,
     hot: true,
     open: true,
@@ -57,12 +57,6 @@ module.exports = (env) => ({
           reuseExistingChunk: true,
           name: 'default',
         },
-        styles: {
-          name: 'styles',
-          test: /\.css$/,
-          chunks: 'all',
-          enforce: true,
-        },
       },
     },
   },
@@ -85,6 +79,7 @@ module.exports = (env) => ({
               // you can specify a publicPath here
               // by default it uses publicPath in webpackOptions.output
               publicPath: '/',
+              esModule: true,
               hmr: !env.production,
             },
           },
@@ -92,7 +87,7 @@ module.exports = (env) => ({
             loader: 'css-loader',
             options: {
               importLoaders: 1,
-              modules: true,
+              sourceMap: !env.production,
             },
           },
           {
@@ -101,11 +96,13 @@ module.exports = (env) => ({
               sourceMap: !env.production,
             },
           },
-          { loader: 'resolve-url-loader' },
           {
             loader: 'less-loader',
             options: {
               sourceMap: !env.production,
+              lessOptions: {
+                javascriptEnabled: true,
+              },
             },
           },
         ],
@@ -133,8 +130,8 @@ module.exports = (env) => ({
     new ExtractCssChunks({
       // Options similar to the same options in webpackOptions.output
       // all options are optional
-      filename: env.production ? '[name].[hash].css' : '[name].css',
-      chunkFilename: env.production ? '[id].[hash].css' : '[id].css',
+      filename: env.production ? '[name].[hash:5].css' : '[name].css',
+      chunkFilename: env.production ? '[id].[hash:5].css' : '[id].css',
       ignoreOrder: false, // Enable to remove warnings about conflicting order
     }),
     new HtmlWebpackPlugin({ template: './public/index.html', title: 'TBMicroServices' }),

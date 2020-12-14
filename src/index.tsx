@@ -1,11 +1,13 @@
+import { Button } from 'antd';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.less';
 
 ReactDOM.render(
-  <div className="App">
+  <div>
     <h1>Hello React!</h1>
     <p>Hi Aaron</p>
+    <Button type="primary">Click</Button>
   </div>,
   document.getElementById('root'),
 );
